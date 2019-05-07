@@ -10,7 +10,7 @@ var SetProjectAction = function(){
         var customButtonRow     = $('#customQtyRow');
         var customSelectRow     = $('#quantityOfCard');
         var customQtyDivRow     = $('#customQtyDivRow');
-        var quantityOfDivRow    = $('#quantityOfDivRow');
+        //var quantityOfDivRow    = $('#quantityOfDivRow');
         customButtonRow.click(function(){
             if(customSelectRow.hasClass('d-none')){
                 customSelectRow.removeClass('d-none');
