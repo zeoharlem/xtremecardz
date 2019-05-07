@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "youtube-vidz-172017",
+  "private_key_id": "a187ba426c3cf40dd8b77ad4916a3a0d4471f6e4",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC1fdQppAAXofDe\nUnAQQjK7Gy9vaIxn9zJhdbdGmRJe8DQrrVP8I34txTPq2T8wLZ43Z50G7wy9ZofI\n7grPlv2tOn7EB6GO/hpKvZH8XFZpOidILV8UMr+Vn8bDpqoKMfgoaaH3/H328TiT\nBXEMOpzqG90S/aqm/FjwyCP0ydJpN4ZX9qR0EkIXaLTRrsJn7bYurCuVl3Ydgy5s\nWswvdCP/qu+Zmtw8ESQ9lah0rU2njwMwwlf6Hqz1upq0TcfUULsX+yW4+tizlywA\nTzWurNcncVNZVUiz/U0CWff4x7s1VWO/Uyd/sHqDdUy6CjyMjQvUZceRpZOnRzHC\nNSn5+XUnAgMBAAECggEAAtIOSolgcP2Uyze3wyDsPekpvw7+Y509XLNiIkg9t1j/\nTpB2hiwdCWQPrv4qU7rZwx2qnJF5frYJtS8x3tEHZzpJ/wzpT1oWmYPBsYzT0PXU\n53PBDwTM4mvlwGOmL9tf8mzV1g9H+9761JoYjCqbBq5hLKrhjI/OaAuMN4EtcnIi\nPKY9IIKRo8US+GjR/FCDCkPnJ3ROG5dKzl0C9rFrfFVvPCmdkaIflG9um3xBgz59\nw70dHjbPB18NdO0KoAOEcTrg0rXYqzCybI71wli3sRgtwIlBafi0eq5dLoxi181j\nN+c2XmfRCuC+cBvrl4rh4Aj/pRIK9CkwOZHJmqjkiQKBgQDqdTIwQwOJY6sA6/Pe\nwQUHJPUS1w4yQJ5lh63H+jWPbW92E0TdBaTxQo8MIiCduGuusG1mTd81KNyj17Tu\nTBiZJAbSppicjb7II6zSS4Laa5OdNaIwRlatFN1Nyd+ScJRDzMzubdQ3BvaczmOr\nA6flDOCJhonz2XZ/GgykclIbmQKBgQDGKskIzXlBmk0JnKPKm9mjqFTWzP/C0hxb\n5NjrpmGZSHsstoHMoPJd0i2vUfSe987//Wi2BT6G9jGU1zGINNxmoo/lliyaJL96\nSyG+LGAkvuoxHww2J/887KWLKdzgNOyaaEyYbW5PoL4zCVh5SfA7SP9abbc0LMox\nBWfxn6iOvwKBgQClQFVPjuw/OfCdhbEtn/5bOsFBtjJbWRBLn4XtHX4Cya92Gb6/\nyeqn4bHRa3xxrjq3tcJmCRz56wMYuEDedOQhjDMC5klKjt2ZUwvMbUydhpVUiSj3\nvZv6Amq5GUBrhs35u6/1nZOl9VJ80zuMndcIqjrYs+sn5G6Qx1uBzNHygQKBgQC1\nq2mroTtFkiCH7EsYJnKKn3pPhZX/U8Hd2Nmoh1q4PIN3hUVPhElNC68IKBkbV1E0\ny2sgW4RsE+12ZyWomdVoXiWPM3JmScQkaBZiEqp9ZWyrZaw7RcWvY7+L6e/st3gl\nQfLeVowngdR8U1gBsXAD2bMHgsfOlDU0ZaFaGKVdXwKBgG/6yyOneaNW8cuTH011\nrwEQti6Zf+chWfuoGa4IMmJq07jUa1v/ydNKDYVWyjnXCcLIG3KKXoyE4AbOBS9l\nLqSfON9GaRweJcTFvAbv0mjjMeJy87O28J7ernpJB4C5pK4ClHJKwTuRoETJfH7I\nRWZZKmLsaif/p0Unn0tB0v9y\n-----END PRIVATE KEY-----\n",
+  "client_email": "xtremecardz-collection@youtube-vidz-172017.iam.gserviceaccount.com",
+  "client_id": "111643648416398656072",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/xtremecardz-collection%40youtube-vidz-172017.iam.gserviceaccount.com"
+}
