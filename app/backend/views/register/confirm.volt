@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Falcon | Dashboard &amp; WebApp Template</title>
+    <title>XtremeCardz Design</title>
 
     <!-- ===============================================-->
     <!--    Favicons-->

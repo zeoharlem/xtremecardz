@@ -11,4 +11,21 @@ namespace Multiple\Backend\Models;
 
 class Zipimages extends BaseModel {
 
+    public $setproject_id;
+
+    public function initialize() {
+        $this->hasOne(
+            "setproject_id",
+            "Multiple\\Backend\\Models\\Setprojects",
+            "setproject_id",
+            [
+                "reusable"  => true,
+                "alias"     => "SetprojectZipImages"
+            ]
+        );
+    }
+
+    public function getSetProjectZipImages(){
+        return $this->getRelated("SetprojectZipImages");
+    }
 }

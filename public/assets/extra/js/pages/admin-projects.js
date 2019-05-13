@@ -37,17 +37,17 @@ var SetProjectAction = function(){
     }
 
     var handleDropZoneUpload    = function(){
-        //var myDropzone = new Dropzone("#myAwesomeDropzone", { url: urlRowString+"/backend/projects/zipfile" });
+        //var myDropzone = new Dropzone("#myAwesomeDropzone", { url: urlRowString+"/admin/projects/zipfile" });
         var myDropzone = $('#myAwesomeDropzone').dropzone({
             maxFilesize: 100,
             timeout: 0,
-            url: urlRowString+"/backend/projects/zipfile",
+            url: urlRowString+"/admin/projects/zipfile",
             init: function(){
                 this.on("success", function(file, response){
                     var dataString  = JSON.stringify(response);
                     if(response.status === 'OK'){
                         alert(dataString);
-                        location.href   = urlRowString+'/backend/projects/list'
+                        location.href   = urlRowString+'/admin/projects/list'
                     }
                     else{
                         alert(dataString);
@@ -62,13 +62,13 @@ var SetProjectAction = function(){
         var myDropZoneBox   = $("#mySignDropZone").dropzone({
             maxFilesize: 100,
             timeout: 0,
-            url: urlRowString+"/backend/projects/sign",
+            url: urlRowString+"/admin/projects/sign",
             init: function(){
                 this.on("success", function(file, response){
                     var dataString  = JSON.stringify(response);
                     if(response.status === 'OK'){
                         alert(dataString);
-                        location.href   = urlRowString+'/backend/projects/list'
+                        location.href   = urlRowString+'/admin/projects/list'
                     }
                     else{
                         alert(dataString);
@@ -88,8 +88,8 @@ var SetProjectAction = function(){
             customQtyRowAction();
             removeWhiteSpaces();
             handleDropZoneUpload();
-            handleProfileSubmit();
             handleDropZoneSignUpload();
+            handleProfileSubmit();
         }
     }
 }();

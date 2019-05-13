@@ -8,7 +8,7 @@
           </div>
         </div>
         <div class="notification-body">
-          <p class="mb-1"><strong style="font-size:15px;">{{values.project_title | capitalize}}</strong><br/>Card Quantity: <?php echo count($values->getProjectSetAlias()); ?></p>
+          <p class="mb-1"><strong style="font-size:15px;">{{values.project_title | capitalize}}</strong><br/>Number of Uploads: <?php echo count($values->getProjectSetAlias()); ?></p>
           <span class="notification-time"><span class="mr-1" role="img" aria-label="Emoji">💬</span>XtremeCardz</span>
         </div>
       </a>

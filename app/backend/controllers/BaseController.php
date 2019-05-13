@@ -13,7 +13,9 @@
  */
 namespace Multiple\Backend\Controllers;
 
+use Multiple\Backend\Models\Profile;
 use Phalcon\Mvc\Controller;
+use Phalcon\Mvc\Dispatcher;
 use Phalcon\Tag;
 
 class BaseController extends Controller {
@@ -30,6 +32,24 @@ class BaseController extends Controller {
             ->addJs("assets/extra/lib/datatables.net-responsive/dataTables.responsive.js")
             ->addJs("assets/extra/lib/datatables.net-responsive-bs4/responsive.bootstrap4.js");
 
+        $this->view->setVar("setHelperAction", $this->component->helper);
+    }
+
+    public function beforeExecuteRoute(Dispatcher $dispatcher){
+        $action     = $dispatcher->getActionName();
+        $controller = $dispatcher->getControllerName();
+        if(($controller !== "index" && $controller !== "login" && $controller !== 'logout') && $controller != 'settings'){
+            $register_id    = $this->session->get('auth')['register_id'];
+            $profile        = Profile::findFirstByRegister_id($register_id);
+
+            if($profile == false){
+                $dispatcher->forward([
+                    "controller"    => "settings",
+                    "action"        => "index",
+                ]);
+                return;
+            }
+        }
     }
 
     protected function __dataTableFlow($builder){

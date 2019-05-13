@@ -11,30 +11,39 @@ namespace Multiple\Backend\Controllers;
 
 use DataTables\DataTable;
 use Multiple\Backend\Models\Cardtype;
+use Multiple\Backend\Models\Extractedimages;
 use Multiple\Backend\Models\Projects;
 use Multiple\Backend\Models\Setprojects;
+use Multiple\Backend\Models\Signatures;
+use Multiple\Backend\Models\Signimages;
+use Multiple\Backend\Models\Staffupload;
 use Multiple\Backend\Models\Zipimages;
+use Phalcon\Mvc\Model\Transaction\Failed;
+use Phalcon\Mvc\Model\Transaction\Manager;
 use Phalcon\Mvc\View;
 
 class ProjectsController extends BaseController {
+
     public function initialize(){
         parent::initialize();
         $this->tag->appendTitle("Projects");
         $this->assets->collection('footers')->addJs("assets/extra/js/pages/projects.js");
         $this->view->setVar("card_types", Cardtype::find()->toArray());
+        //echo $this->component->helper->backToRewriteUrlString("
+        //C:\wamp64\www\xtremecardz\public\uploads\zips\1557493508_Picture\Picture\IKD012799.jpg");
+        //exit;
+        $var    = "\IKD012799.jpg";
+        //echo substr($var, strrpos($var, "\\")+1, strrpos($var, ".")-1);
+        //exit;
     }
 
     public function indexAction() {
         if($this->request->isPost()){
             $projects   = new Projects();
-            if($projects->create($this->request->getPost())){
-                $this->dispatcher->forward(
-                    [
-                        "action"        => "setproject",
-                        "params"        => $this->request->getPost() + ["project_id" => $projects->project_id]
-                    ]
-                );
-                return;
+            $registerId = $this->session->get('auth')['register_id'];
+            $taskRow    = $this->request->getPost() + ["user_id" => $registerId];
+            if($projects->create($taskRow)){
+                $this->response->redirect("backend/projects/empty?task=xXxLM");
             }
             else{
                 $this->flash->error(implode(', ', $projects->getMessages()));
@@ -56,51 +65,60 @@ class ProjectsController extends BaseController {
     }
 
     public function setprojectAction(){
-        if($this->dispatcher->wasForwarded()) {
-            $parameter  = $this->dispatcher->getParams();
+        if($this->request->hasQuery("project_id")){
             $uploadCsvAction    = $this->uploadCsvAction();
             if($uploadCsvAction){
-                $setProject = new Setprojects();
-                $arrayPost  = [
-                    "project_id"    => $parameter['project_id'],
-                    "quantity"      => $this->request->getPost('quantity'),
-                    "project_title" => $this->request->getQuery('project_title'),
-                    "user_id"       => $this->session->get('auth')['register_id'],
-                    "type_of_card"  => $this->request->getPost("type_of_card"),
-                    "card_csv_file" => $uploadCsvAction[0]
-                ];
-                if($setProject->create($arrayPost) != false){
-                    $this->response->redirect("backend/projects/list?task=success");
+                try{
+                    $managerRow     = new Manager();
+                    $transaction    = $managerRow->get();
+                    $setProject     = new Setprojects();
+                    $quantity       = @$this->request->getPost('quantity');
+                    $quantity2      = @$this->request->getPost('quantity2');
+
+                    $arrayPost      = [
+                        "project_id"    => $this->request->getQuery('project_id'),
+                        "quantity"      => !empty($quantity) ? $quantity : $quantity2,
+                        "project_title" => $this->request->getQuery('project_title'),
+                        "user_id"       => $this->session->get('auth')['register_id'],
+                        "type_of_card"  => $this->request->getPost('type_of_card'),
+                        "card_csv_file" => $uploadCsvAction[0]
+                    ];
+
+                    $setProject->setTransaction($transaction);
+                    if($setProject->create($arrayPost) == false){
+                        $transaction->rollback(implode(",", $setProject->getMessages()));
+                    }
+                    //Set the Variable for the array
+                    $extraRowAction = [];
+
+                    //Set the CSV path relative path ready
+                    $csvPathRow     = "../public/uploads/csvs/";
+                    $csv            = $this->csvTaskLoad($csvPathRow.$setProject->card_csv_file);
+                    $shitedKeyRow   = array_shift($csv);
+
+                    foreach($csv as $keyCsvRow => $valueKeyCsv){
+                        //Set Transaction within the for loop
+                        $staffUploadCsv     = new Staffupload();
+                        $staffUploadCsv->setTransaction($transaction);
+                        $extraRowAction[]   = [
+                            "firstname"     => $valueKeyCsv[0],
+                            "lastname"      => $valueKeyCsv[1],
+                            "staff_id"      => $valueKeyCsv[2],
+                            "setproject_id" => $setProject->setproject_id,
+                            "project_id"    => $this->request->getQuery("project_id"),
+                            "user_id"       => $this->session->get('auth')['register_id']
+                        ];
+                        //var_dump($extraRowAction[$keyCsvRow]);
+                        if($staffUploadCsv->create($extraRowAction[$keyCsvRow]) == false){
+                            $transaction->rollback(implode(",", $staffUploadCsv->getMessages()));
+                        }
+                    }
+                    $transaction->commit();
+                    $this->response->redirect("backend/projects/list");
                 }
-                else{
-                    $this->flash->error(implode(", ", $setProject->getMessages()));
-                    $this->response->redirect("backend/projects/list?task=failed");
-                }
-            }
-            $this->view->setVars([
-                "project_id"    => $parameter['project_id'],
-                "project_title" => $parameter['project_title']
-            ]);
-            $this->view->setRenderLevel(View::LEVEL_AFTER_TEMPLATE);
-        }
-        elseif(!$this->dispatcher->wasForwarded() && $this->request->hasQuery("project_id")){
-            $uploadCsvAction    = $this->uploadCsvAction();
-            if($uploadCsvAction){
-                $setProject = new Setprojects();
-                $arrayPost  = [
-                    "type_of_card"  => 1,
-                    "quantity"      => $this->request->getPost('quantity'),
-                    "project_id"    => $this->request->getQuery('project_id'),
-                    "project_title" => $this->request->getQuery('project_title'),
-                    "user_id"       => $this->session->get('auth')['register_id'],
-                    "card_csv_file" => $uploadCsvAction[0]
-                ];
-                if($setProject->create($arrayPost) != false){
-                    $this->response->redirect("backend/projects/list?task=success");
-                }
-                else{
-                    $this->flash->error(implode(", ", $setProject->getMessages()));
-                    $this->response->redirect("backend/projects/list?task=failed");
+                catch(Failed $exception){
+                    $this->flash->error($exception->getMessage());
+                    $this->response->redirect('backend/projects/setproject?'.http_build_query($this->request->getQuery()));
                 }
             }
             $this->view->setVars([
@@ -140,23 +158,65 @@ class ProjectsController extends BaseController {
                         "setproject_id" => $this->request->getPost('setproject_id', 'int'),
                         "user_id"       => $this->session->get('auth')['register_id']
                     ];
+
                     $zipImagesRow   = new Zipimages();
-                    if($zipImagesRow->create($postQuery)){
-                        $this->response->setJsonContent([
-                            "status"    => "OK",
-                            "data"      => $this->request->getPost(),
-                            "message"   => "Uploaded Succesfully"
-                        ])->send();
+
+                    if($zipImagesRow->create($postQuery) == true){
+                        $zipfile_id = $zipImagesRow->zipimage_id;
+                        $exCopyZip  = $this->extractedRowAction($zipfile_id);
+
+                        try{
+                            $manager        = new Manager();
+                            $transaction    = $manager->get();
+
+                            foreach($exCopyZip['zipImageDirs'] as $keyExCopyZip => $valueExCopyZip){
+                                $nameZipImg = @$exCopyZip['csvDirValues'][$keyExCopyZip];
+                                if(!is_null($nameZipImg[2]) && !empty($nameZipImg[2])) {
+                                    $copyExtract = [
+                                        "staff_id"          => $nameZipImg[2],
+                                        'user_id'           => $this->session->get('auth')['register_id'],
+                                        "image_extracted"   => $this->component->helper->backToRewriteUrlString($valueExCopyZip),
+                                    ];
+                                }
+                                $postExtracted  = new Extractedimages();
+                                $postExtracted->setTransaction($transaction);
+                                if($postExtracted->create($copyExtract) == false){
+                                    $transaction->rollback("Extracted Images: ".implode(",", $postExtracted->getMessages()));
+                                }
+                            }
+                            $transaction->commit();
+                            $this->response->setJsonContent([
+                                "status"    => "OK",
+                                "data"      => $this->request->getPost(),
+                                "message"   => "Uploaded Succesfully"
+                            ])->send();
+
+                        }
+                        catch(Failed $exception){
+                            //Remove the zip the file and directory
+                            $removeExtension    = substr($newFileName, 0, strrpos($newFileName,'.'));
+                            $this->removeDirRow($uploadPathRow.$removeExtension);
+
+                            unlink($uploadPathRow.$newFileName);
+
+                            $this->response->setJsonContent([
+                                "status"    => "ERROR",
+                                "data"      => $this->request->getPost(),
+                                "message"   => $exception->getMessage()
+                            ])->send();
+                        }
                     }
                     else{
+                        unlink($uploadPathRow.$newFileName);
                         $this->response->setJsonContent([
                             "status"    => "ERROR",
                             "data"      => $this->request->getPost(),
-                            "message"   => implode(',', $zipImagesRow->getMessages())
+                            "message"   => "Psta: ".implode(",", $zipImagesRow->getMessages())
                         ])->send();
                     }
                 }
                 else{
+                    unlink($uploadPathRow.$newFileName);
                     $this->response->setJsonContent([
                         "data"      => [],
                         "status"    => "ERROR",
@@ -197,6 +257,9 @@ class ProjectsController extends BaseController {
                 $stackRowFlow[] = [
                     "project_id"    => $valueRow->project_id,
                     "setproject_id" => $valueRow->setproject_id,
+                    "check_zip_fl"  => $valueRow->getZipImagesRow() ? true : false,
+                    "check_sign_fl" => $valueRow->getSignImagesRow() ? true : false,
+                    "zip_images_id" => @$valueRow->getZipImagesRow()->zipimage_id,
                     "project_title" => $valueRow->getProjectsRow()->project_title,
                     "date_created"  => $valueRow->date_created,
                     "type_of_card"  => $valueRow->type_of_card,
@@ -208,6 +271,237 @@ class ProjectsController extends BaseController {
             $datatables->fromArray($stackRowFlow)->sendResponse();
         }
         return $this->view->disable();
+    }
+
+    public function exposedAction() {
+        $zipAchive  = new \ZipArchive();
+        $pathRow    = "../public/uploads/zips/";
+        $csvPathRow = "../public/uploads/csvs/";
+        if($this->request->isGet() && $this->request->hasQuery('project_id')){
+            $params = @$this->request->getQuery() + ['user_id' => $this->session->get('auth')['register_id']];
+            $this->view->setVars([
+                "pager" => Setprojects::getPagingSetProjectRow($params)
+            ]);
+        }
+        $getTitle   = Projects::findFirst(
+            'project_id="'.$this->request->getQuery('project_id').
+            '" AND user_id="'.$this->session->get('auth')['register_id'].'"'
+        );
+        $this->view->setVar("project_title", ucwords($getTitle->project_title));
+        return $this->view->setRenderLevel(View::LEVEL_AFTER_TEMPLATE);
+    }
+
+    public function signAction(){
+        if($this->request->hasFiles() && $this->request->isAjax()){
+            $mimeTypes  = [
+                "application/x-rar-compressed",
+                "application/octet-stream",
+                "application/zip",
+                "application/octet-stream",
+                "application/x-zip-compressed",
+                "multipart/x-zip"
+            ];
+
+            $getUploadFile  = $this->request->getUploadedFiles()[0];
+            $mimeTypeZip    = $getUploadFile->getRealType();
+            if(in_array($mimeTypeZip, $mimeTypes)){
+                $timeRow        = time();
+                $uploadPathRow  = "../public/uploads/signs/";
+                $newFileName    = $timeRow."_".preg_replace('/\s+/', '_', $getUploadFile->getName());
+                $movedFileRow   = $getUploadFile->moveTo($uploadPathRow.$newFileName);
+                if($movedFileRow){
+                    $postQuery  = [
+                        "signimage_url" => $newFileName,
+                        "project_id"    => $this->request->getPost('project_id','int'),
+                        "setproject_id" => $this->request->getPost('setproject_id', 'int'),
+                        "user_id"       => $this->session->get('auth')['register_id']
+                    ];
+
+                    $zipImagesRow   = new Signimages();
+                    if($zipImagesRow->create($postQuery) == true){
+
+                        $zipfile_id = $zipImagesRow->signimage_id;
+                        $exCopyZip  = $this->extractSignAction($zipfile_id);
+
+                        try{
+                            $manager        = new Manager();
+                            $transaction    = $manager->get();
+
+                            foreach($exCopyZip['zipImageDirs'] as $keyExCopyZip => $valueExCopyZip){
+                                $nameSignImg    = substr($valueExCopyZip, strrpos($valueExCopyZip,"\\")+1);
+                                $nameZipImg     = substr($nameSignImg, 0, strrpos($nameSignImg, "."));
+                                if(!is_null($nameZipImg) && !empty($nameZipImg)) {
+                                    $copyExtract = [
+                                        "staff_id"          => $nameZipImg,
+                                        'user_id'           => $this->session->get('auth')['register_id'],
+                                        "image_extracted"   => $this->component->helper->backToRewriteUrlString($valueExCopyZip),
+                                    ];
+                                }
+                                $postExtracted  = new Signatures();
+                                $postExtracted->setTransaction($transaction);
+                                if($postExtracted->create($copyExtract) == false){
+                                    $transaction->rollback("Extracted Images: ".implode(",", $postExtracted->getMessages()));
+                                }
+                            }
+                            $transaction->commit();
+                            $this->response->setJsonContent([
+                                "status"    => "OK",
+                                "data"      => $this->request->getPost(),
+                                "message"   => "Uploaded Succesfully"
+                            ])->send();
+
+                        }
+                        catch(Failed $exception){
+                            //Remove the zip the file and directory
+                            $removeExtension    = substr($newFileName, 0, strrpos($newFileName,'.'));
+                            $this->removeDirRow($uploadPathRow.$removeExtension);
+
+                            unlink($uploadPathRow.$newFileName);
+
+                            $this->response->setJsonContent([
+                                "status"    => "ERROR",
+                                "data"      => $this->request->getPost(),
+                                "message"   => $exception->getMessage()
+                            ])->send();
+                        }
+                    }
+                    else{
+                        unlink($uploadPathRow.$newFileName);
+                        $this->response->setJsonContent([
+                            "status"    => "ERROR",
+                            "data"      => $this->request->getPost(),
+                            "message"   => "Psta: ".implode(",", $zipImagesRow->getMessages())
+                        ])->send();
+                    }
+                }
+                else{
+                    unlink($uploadPathRow.$newFileName);
+                    $this->response->setJsonContent([
+                        "data"      => [],
+                        "status"    => "ERROR",
+                        "message"   => $getUploadFile->getError()
+                    ])->send();
+                }
+            }
+            return $this->view->disable();
+        }
+        $this->assets->collection('headers')->addCss('assets/css/dropzone.css');;
+        return $this->view->setRenderLevel(View::LEVEL_AFTER_TEMPLATE);
+    }
+
+    private function extractSignAction($zipRowId){
+        $zipAchive  = new \ZipArchive();
+        $pathRow    = "../public/uploads/signs/";
+        $csvPathRow = "../public/uploads/csvs/";
+
+        $zipFileRow     = $zipRowId;
+        $getZipAchive   = Signimages::findFirstBySignimage_id($zipFileRow);
+
+        $filePathRow    = substr($getZipAchive->signimage_url,0, strrpos($getZipAchive->signimage_url,'.'));
+
+        if(is_dir($pathRow.$filePathRow)){
+            //Start the Directory Check
+            $getRow = $this->checkCsvZipArchive(null, $pathRow.$filePathRow);
+        }
+        else {
+            $openZipAchive = $zipAchive->open($pathRow.$getZipAchive->signimage_url);
+            if ($openZipAchive === true) {
+                $zipAchive->extractTo($pathRow.$filePathRow);
+                $zipAchive->close();
+
+                //Start the Directory Check
+                $getRow = $this->checkCsvZipArchive(null, $pathRow.$filePathRow);
+            }
+        }
+
+        return [
+            "zipImageDirs"  => $getRow['signDir'],
+            "headerKeyRow"  => $getRow['keysRow']
+        ];
+    }
+
+    private function extractedRowAction($zipRowId){
+        $zipAchive  = new \ZipArchive();
+        $pathRow    = "../public/uploads/zips/";
+        $csvPathRow = "../public/uploads/csvs/";
+
+        $zipFileRow     = $zipRowId;
+        $getZipAchive   = Zipimages::findFirstByZipimage_id($zipFileRow);
+        $filePathRow    = substr($getZipAchive->zipimage_url,0, strrpos($getZipAchive->zipimage_url,'.'));
+        if(is_dir($pathRow.$filePathRow)){
+            //Start the Directory Check
+            $csvs   = $this->csvTaskLoad($csvPathRow.$getZipAchive->getSetProjectZipImages()->card_csv_file);
+            $getRow = $this->checkCsvZipArchive($csvs, $pathRow.$filePathRow);
+        }
+        else {
+            $openZipAchive = $zipAchive->open($pathRow.$getZipAchive->zipimage_url);
+            if ($openZipAchive === true) {
+                $zipAchive->extractTo($pathRow.$filePathRow);
+                $zipAchive->close();
+
+                //Start the Directory Check
+                if($getZipAchive->getSetProjectZipImages()) {
+                    $csvs   = $this->csvTaskLoad($csvPathRow.$getZipAchive->getSetProjectZipImages()->card_csv_file);
+                    $getRow = $this->checkCsvZipArchive($csvs, $pathRow.$filePathRow);
+                }
+            }
+        }
+        return [
+            "csvDirValues"  => $getRow['csvDir'],
+            "zipImageDirs"  => $getRow['zipDir'],
+            "headerKeyRow"  => $getRow['keysRow']
+        ];
+
+    }
+
+    //Extract ZipArchives
+    private function checkCsvZipArchive($csv, $zipDir){
+        $stackRow   = [];
+        $getKeysRow = [];
+        if(!is_null($csv) && !empty($csv)) {
+            $getKeysRow = array_shift($csv);
+            foreach($csv as $keyRowCsv => $valueRowCsv){
+                $stackRow[] = $valueRowCsv;
+            }
+            return [
+                "csvDir" => $stackRow,
+                "keysRow" => $getKeysRow,
+                "zipDir" => $this->getDirContents($zipDir),
+            ];
+        }
+        else{
+            return [
+                "keysRow" => $getKeysRow,
+                "signDir" => $this->getDirContents($zipDir),
+            ];
+        }
+    }
+
+    //Convert CSV to array values
+    private function csvTaskLoad($csv){
+        $multiCsvArr    = [];
+        if(($handle = fopen("{$csv}", "r")) !== false){
+            while(($dataRow = fgetcsv($handle, 1000, ",")) !== false){
+                $multiCsvArr[]  = $dataRow;
+            }
+        }
+        fclose($handle);
+        return $multiCsvArr;
+    }
+
+    private function getDirContents($dir, &$results = []){
+        $files  = scandir($dir);
+        foreach($files as $key => $value){
+            $path = realpath($dir.DIRECTORY_SEPARATOR.$value);
+            if(!is_dir($path)) {
+                $results[] = $path;
+            }
+            elseif($value != "." && $value != ".."){
+                $this->getDirContents($path, $results);
+                $results[] = $path;
+            }
+        }
+        return $results;
     }
 
     //Make the formAction a post to suit this method
@@ -241,10 +535,26 @@ class ProjectsController extends BaseController {
                 $timeChecked    = time();
                 $uploadPathRow  = "../public/uploads/csvs/";
                 return [
-                    $csvFileName."_".$timeChecked,
-                    $getUploadFile->moveTo($uploadPathRow.$csvFileName."_".$timeChecked)
+                    $timeChecked."_".$csvFileName,
+                    $getUploadFile->moveTo($uploadPathRow.$timeChecked."_".$csvFileName)
                 ];
             }
         }
     }
+
+    private function removeDirRow($dir){
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (filetype($dir . "/" . $object) == "dir")
+                        $this->removeDirRow($dir . "/" . $object);
+                    else unlink($dir . "/" . $object);
+                }
+            }
+            reset($objects);
+            return rmdir($dir);
+        }
+    }
+
 }

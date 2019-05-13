@@ -36,10 +36,6 @@ class Helper extends \Phalcon\Mvc\User\Component{
         $this->response->redirect($rd);
         return;
     }
-    
-    public function setPercentFlow($poor, $fair, $good, $excellent, $accessors){
-        return number_format((($poor + $fair + $good + $excellent) / $accessors) * (100 / 4), 1);
-    }
 
     //Used for the json helpper errors;
     public function getMsgReturn($classVar){
@@ -49,7 +45,20 @@ class Helper extends \Phalcon\Mvc\User\Component{
         }
         return $outputs;
     }
-    
+
+    public function setActiveHyperLink($activeUrl){
+        //$activeUrl      = $this->router->getRewriteUri();
+        $controller     = $this->dispatcher->getControllerName();
+        $checkUrlActive = strpos($activeUrl, $controller) == true ? "true" : "false";
+        //var_dump($checkUrlActive); exit;
+        return $checkUrlActive;
+    }
+
+    public function backToRewriteUrlString($imageUrl){
+        $newImageUrl    = substr($imageUrl, strrpos($imageUrl, "uploads"));
+        return str_replace("\\", "/", $newImageUrl);
+    }
+
     public function hashPassword($password){
         return $this->security->hash($password);
     }

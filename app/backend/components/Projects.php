@@ -13,7 +13,7 @@
  */
 namespace Component;
 
-class User extends \Phalcon\Mvc\User\Component{
+class Projects extends \Phalcon\Mvc\User\Component{
     //put your code here
     
 }

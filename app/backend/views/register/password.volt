@@ -12,7 +12,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Falcon | Dashboard &amp; WebApp Template</title>
+    <title>Xtremecardz Design</title>
 
     <!-- ===============================================-->
     <!--    Favicons-->

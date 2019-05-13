@@ -1,10 +1,11 @@
 var SettingsRow = function() {
 
     var handlePasswordAction    = function(){
-        $('form').submit(function(e){
+        $('#passwordReset').submit(function(e){
             e.preventDefault();
-            if(checkPassword()){
+            if(!checkPassword()){
                 //Ajax submission
+                return true;
             }
             return;
         });

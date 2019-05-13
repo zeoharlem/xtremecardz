@@ -29,13 +29,13 @@ class Projects extends BaseModel {
     }
 
     public function beforeValidationOnCreate(){
-        $this->user_id  = 1;
+
     }
 
     public static function getPagingProjectRow($params){
         //Query default values
-        $sort = $params['sort'] ?: 'r.project_title';
-        $order = $params['order'] ?: 'ASC';
+        $sort   = $params['sort'] ?: 'r.project_id';
+        $order  = $params['order'] ?: 'DESC';
         $page   = (int) $params['page'] ?: 1;
         $limit  = $params['limit'] ?: 20;
 

@@ -12,7 +12,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Falcon | Dashboard &amp; WebApp Template</title>
+    <title>XtremeCardz Design</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url('assets/extra/img/favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url('assets/extra/img/favicons/favicon-32x32.png') }}">
@@ -66,6 +66,9 @@
       <script src="{{ url('assets/extra/js/theme.js') }}"></script>
       <script src="{{ url('assets/extra/js/custom.js') }}"></script>
       <script src="{{ url('assets/js/dropzone.js') }}"></script>
-      <script>Dropzone.autoDiscover   = false;</script>
+
+      <script>
+          Dropzone.autoDiscover   = false;
+      </script>
   </body>
 </html>

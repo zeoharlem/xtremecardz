@@ -36,7 +36,11 @@ try{
             'controller'    => 'index',
             'action'        => 'index'
         ));
-        
+
+        /**
+         * Backend Region ROuter
+         * Configurations
+         */
         $router->add("/backend", array(
             'module'        => 'backend',
             'controller'    => 'index',
@@ -60,6 +64,60 @@ try{
             'action'        => 2,
             'params'        => 3));
 
+        /**
+         * Admin Region
+         * COnfiguration of routes for the admin
+         */
+        $router->add("/admin", array(
+            'module'        => 'admin',
+            'controller'    => 'index',
+            'action'        => 'index'
+        ));
+
+        $router->add('/admin/:controller', array(
+            'module'        => "admin",
+            'controller'    => 1,
+            'action'        => "index"
+        ));
+
+        $router->add('/admin/:controller/:action/', array(
+            'module'        => "admin",
+            'controller'    => 1,
+            'action'        => 2));
+
+        $router->add('/admin/:controller/:action/:params', array(
+            'module'        => "admin",
+            'controller'    => 1,
+            'action'        => 2,
+            'params'        => 3));
+
+        /**
+         * Production Region
+         * COnfiguration of routes for the Production
+         */
+        $router->add("/pro", array(
+            'module'        => 'pro',
+            'controller'    => 'index',
+            'action'        => 'index'
+        ));
+
+        $router->add('/pro/:controller', array(
+            'module'        => "pro",
+            'controller'    => 1,
+            'action'        => "index"
+        ));
+
+        $router->add('/pro/:controller/:action/', array(
+            'module'        => "admin",
+            'controller'    => 1,
+            'action'        => 2));
+
+        $router->add('/pro/:controller/:action/:params', array(
+            'module'        => "pro",
+            'controller'    => 1,
+            'action'        => 2,
+            'params'        => 3));
+
         $router->mount(new Routes());
         return $router;
     });
@@ -72,6 +130,14 @@ try{
         'backend'   => array(
             'className' => 'Multiple\Backend\Module',
             'path'      => '../app/backend/Module.php',
+        ),
+        'admin'   => array(
+            'className' => 'Multiple\Admin\Module',
+            'path'      => '../app/admin/Module.php',
+        ),
+        'pro'   => array(
+            'className' => 'Multiple\Pro\Module',
+            'path'      => '../app/pro/Module.php',
         )
     ));
     

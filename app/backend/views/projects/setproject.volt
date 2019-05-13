@@ -18,15 +18,15 @@
 
         <div class="form-group" id="quantityOfDivRow">
           <label for="quantityOfCard">Quantity(ies) of Card</label>
-          <select class="form-control" id="quantityOfCard" name="quantity">
+          <select class="form-control" id="quantityOfCard" name="quantity2">
             <?php for($n = 100; $n <= 1000; $n += 100){  ?>
                 <option value="<?php echo $n; ?>"><?php echo $n; ?></option>
             <?php } ?>
           </select>
           <div class="d-none" id="customQtyDivRow">
-            <input class="form-control" id="customQtyInput" name="type_of_card" type="number" placeholder="Type the Quantity You Want">
+            <input class="form-control" id="customQtyInput" name="quantity" type="number" placeholder="Type the Quantity You Want">
           </div>
-          <a href="javascript:void(0)" style="text-decoration:none;" id="customQtyRow"><small class="text-muted">Select Custom Quantity <i class="fas fa-plus mr-1">+</i></small></a>
+          <a href="javascript:void(0)" style="text-decoration:none;" id="customQtyRow"><small class="text-muted"><b>Click Here to Customize Quantity </b><i class="fas fa-plus mr-1">+</i></small></a>
         </div>
 
         <div class="form-group">

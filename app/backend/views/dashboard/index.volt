@@ -22,7 +22,7 @@
       <!--/.bg-holder-->
       <div class="card-body position-relative">
         <h6>Projects Submitted<span class="badge badge-soft-warning rounded-capsule ml-2"></span></h6>
-        <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif text-warning" data-countupp='{"count":{{projects}},"format":"alphanumeric"}'>{{projects}}</div><a class="font-weight-semi-bold fs--1 text-nowrap" href="#!">See all<span class="fas fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
+        <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif text-warning" data-countupp='{"count":{{projects}},"format":"alphanumeric"}'>{{projects}}</div><a href="{{ url('backend/projects/list') }}" class="font-weight-semi-bold fs--1 text-nowrap" href="#!">See all<span class="fas fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
       </div>
     </div>
     <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
@@ -38,7 +38,7 @@
       <!--/.bg-holder-->
       <div class="card-body position-relative">
         <h6>Xtremecardz Portfolio<span class="badge badge-soft-success rounded-capsule ml-2"></span></h6>
-        <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif" data-countup='{"count":24,"format":"comma","prefix":""}'>0</div><a class="font-weight-semi-bold fs--1 text-nowrap" href="#!">View all<span class="fas fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
+        <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif" data-countup='{"count":5,"format":"comma","prefix":""}'>0</div><a class="font-weight-semi-bold fs--1 text-nowrap" href="{{ url('backend/projects/') }}">View all<span class="fas fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
       </div>
     </div>
   </div>

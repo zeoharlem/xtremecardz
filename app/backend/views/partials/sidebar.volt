@@ -7,36 +7,38 @@
             <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-code-branch"></span></span><span><b>Dashboard</b></span></div>
           </a>
       </li>
-      <li class="nav-item"><a class="nav-link dropdown-indicator" href="#home" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="home">
+      <li class="nav-item">
+        <a class="nav-link dropdown-indicator" href="#home" data-toggle="collapse" role="button" aria-expanded="<?php echo $setHelperAction->setActiveHyperLink('backend/projects'); ?>" aria-controls="home">
           <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-chart-pie"></span></span><span>Projects</span></div>
         </a>
+
         <ul class="nav collapse show" id="home" data-parent="#navbarVerticalCollapse">
           <li class="nav-item active"><a class="nav-link" href="{{url('backend/projects')}}">Create Projects</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{url('backend/projects/list')}}">Submitted Projects</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{url('backend/projects/empty')}}">Projects View</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{url('backend/projects/empty')}}">Projects Created</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{url('backend/projects/list')}}">Projects Content</a></li>
         </ul>
       </li>
-      <li class="nav-item"><a class="nav-link dropdown-indicator" href="#settings" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="settings">
+      <li class="nav-item"><a class="nav-link dropdown-indicator" href="#settings" data-toggle="collapse" role="button" aria-expanded="<?php echo $setHelperAction->setActiveHyperLink('backend/settings'); ?>" aria-controls="settings">
           <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-envelope-open"></span></span><span>Settings</span></div>
         </a>
         <ul class="nav collapse" id="settings" data-parent="#navbarVerticalCollapse">
           <li class="nav-item"><a class="nav-link" href="{{url('backend/settings')}}">Edit Profile</a></li>
           <li class="nav-item"><a class="nav-link" href="{{url('backend/settings/password')}}">Change Password</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{url('backend/settings/contact')}}">Send Message</a></li>
         </ul>
       </li>
-      <li class="nav-item"><a class="nav-link dropdown-indicator" href="#authentication" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="authentication">
+      <li class="nav-item"><a class="nav-link dropdown-indicator" href="#authentication" data-toggle="collapse" role="button" aria-expanded="<?php echo $setHelperAction->setActiveHyperLink('backend/invoice'); ?>" aria-controls="authentication">
           <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-unlock-alt"></span></span><span>Invoice</span></div>
         </a>
         <ul class="nav collapse" id="authentication" data-parent="#navbarVerticalCollapse">
-          <li class="nav-item"><a class="nav-link" href="{{url('backend/invoice')}}">Invoice / Receipt</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{url('backend/invoice')}}">Not Available Yet</a></li>
+          <!-- <li class="nav-item"><a class="nav-link" href="{{url('backend/invoice')}}">Invoice / Receipt</a></li>-->
         </ul>
       </li>
 
     </ul>
     <hr class="border-300 my-2" />
     <ul class="navbar-nav flex-column">
-      <li class="nav-item"><a class="nav-link dropdown-indicator" href="#layouts" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="layouts">
+      <li class="nav-item"><a class="nav-link dropdown-indicator" href="#layouts" data-toggle="collapse" role="button" aria-expanded="<?php echo $setHelperAction->setActiveHyperLink('backend/'); ?>" aria-controls="layouts">
           <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-qrcode"></span></span><span>Portfolios</span></div>
         </a>
         <ul class="nav collapse" id="layouts" data-parent="#navbarVerticalCollapse">
@@ -44,7 +46,7 @@
         </ul>
       </li>
 
-      <li class="nav-item"><a class="nav-link dropdown-indicator" href="#plugins" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="plugins">
+      <li class="nav-item"><a class="nav-link dropdown-indicator" href="#plugins" data-toggle="collapse" role="button" aria-expanded="<?php echo $setHelperAction->setActiveHyperLink('backend/'); ?>" aria-controls="plugins">
           <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-plug"></span></span><span>Feeds</span></div>
         </a>
         <ul class="nav collapse" id="plugins" data-parent="#navbarVerticalCollapse">
@@ -54,7 +56,7 @@
     </ul>
     <hr class="border-300 my-2" />
     <ul class="navbar-nav flex-column">
-      <li class="nav-item"><a class="nav-link dropdown-indicator" href="#documentation" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="documentation">
+      <li class="nav-item"><a class="nav-link dropdown-indicator" href="#documentation" data-toggle="collapse" role="button" aria-expanded="<?php echo $setHelperAction->setActiveHyperLink('backend/'); ?>" aria-controls="documentation">
           <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-book"></span></span><span>Suport System</span></div>
         </a>
         <ul class="nav collapse" id="documentation" data-parent="#navbarVerticalCollapse">

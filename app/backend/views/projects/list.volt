@@ -3,6 +3,7 @@
 
 <div class="row">
     <div class="col-12">
+        {{ flash.output() }}
         <table class="table table-sm table-dashboard dataTableRowProject display responsive no-wrap mb-0 fs--1 w-100">
           <thead class="bg-200">
             <tr>

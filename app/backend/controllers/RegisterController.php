@@ -70,7 +70,7 @@ class RegisterController extends BaseController {
                         $updateRow  = $register->update(
                             [
                                 "role"      => 'user',
-                                "password"  => $this->security->hash($password),
+                                "password"  => $password,
                             ]
                         );
                         if($updateRow){

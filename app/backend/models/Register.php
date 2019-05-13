@@ -10,6 +10,7 @@ namespace Multiple\Backend\Models;
 
 
 use Phalcon\Db\RawValue;
+use Phalcon\Security;
 use Phalcon\Validation;
 
 class Register extends BaseModel {
@@ -56,11 +57,13 @@ class Register extends BaseModel {
     }
 
     public function validation() {
+        $security   = new Security();
         $validation = new Validation();
         $validation->add("email", new Validation\Validator\Uniqueness([
             "models"    => $this,
             "message"   => "Email Already Existed"
         ]));
+        $security->hash($this->password);
         return $this->validate($validation);
     }
 

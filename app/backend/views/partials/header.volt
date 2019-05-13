@@ -8,7 +8,7 @@
     </li>
   </ul>
   <ul class="navbar-nav align-items-center ml-auto">
-    <li class="nav-item dropdown"><a class="nav-link unread-indicator px-0" id="navbarDropdownNotification" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-bell fs-4" data-fa-transform="shrink-6"></span></a>
+    <!--<li class="nav-item dropdown"><a class="nav-link unread-indicator px-0" id="navbarDropdownNotification" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-bell fs-4" data-fa-transform="shrink-6"></span></a>
       <div class="dropdown-menu dropdown-menu-right dropdown-menu-card" aria-labelledby="navbarDropdownNotification">
         <div class="card card-notification shadow-none" style="max-width: 20rem">
           <div class="card-header">
@@ -65,7 +65,7 @@
           <div class="card-footer text-center border-top-0"><a class="card-link d-block" href="#">View all</a></div>
         </div>
       </div>
-    </li>
+    </li>-->
     <li class="nav-item dropdown"><a class="nav-link pr-0" id="navbarDropdownUser" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="avatar avatar-xl">
           <img class="rounded-circle" src="{{ url('assets/extra/img/team/3.jpg') }}" alt="" />
@@ -73,12 +73,12 @@
       </a>
       <div class="dropdown-menu dropdown-menu-right py-0" aria-labelledby="navbarDropdownUser">
         <div class="bg-white rounded-soft py-2">
-          <a class="dropdown-item" href="#!">Set status</a>
-          <a class="dropdown-item" href="pages/profile.html">Profile &amp; account</a>
+          <a class="dropdown-item" href="#!"></a>
+          <a class="dropdown-item" href="{{ url('backend/settings') }}">Profile &amp; account</a>
           <a class="dropdown-item" href="#!">Feedback</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="pages/settings.html">Settings</a>
-          <a class="dropdown-item font-weight-bold text-warning" href="#!"><span>Logout</span></a>
+          <a class="dropdown-item" href="{{ url('backend/settings/password') }}">Settings</a>
+          <a class="dropdown-item font-weight-bold text-warning" href="{{url('backend/logout')}}"><span>Logout</span></a>
         </div>
       </div>
     </li>
