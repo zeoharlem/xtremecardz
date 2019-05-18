@@ -45,34 +45,34 @@
 
             <!-- Portfolio-->
 
-            <li class="nav-item dropdown-toggle"><a class="nav-link" href="#">ID Cards</a>
+            <li class="nav-item dropdown-toggle"><a class="nav-link" href="#">Cards</a>
               <ul class="dropdown-menu">
-                <li class="dropdown-item"><a href="{{ url('portfolio') }}">Metal ID Cards</a></li>
-                <li class="dropdown-item"><a href="{{ url('portfolio') }}">Plastic ID Cards</a></li>
+                <li class="dropdown-item has-children"><a href="portfolio-style1-boxed.html">ID Cards</a>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a href="portfolio-style1-boxed.html">Style 1 Boxed Layout</a></li>
+                    <li class="dropdown-item"><a href="portfolio-style1-fw.html">Style 1 Full Width Layout</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown-item has-children"><a href="portfolio-style2-boxed.html">Business Cards</a>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a href="portfolio-style2-boxed.html">Style 2 Boxed Layout</a></li>
+                    <li class="dropdown-item"><a href="portfolio-style2-fw.html">Style 2 Full Width Layout</a></li>
+                  </ul>
+                </li>
 
+                <li class="dropdown-item has-children"><a href="portfolio-single-side-gallery-grid.html">Cooperate Persona</a>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a href="portfolio-single-side-gallery-grid.html">Side Gallery Grid</a></li>
+                    <li class="dropdown-item"><a href="portfolio-single-side-gallery-list.html">Side Gallery List</a></li>
+                    <li class="dropdown-item"><a href="portfolio-single-wide-slider.html">Wide Slider</a></li>
+                    <li class="dropdown-item"><a href="portfolio-single-wide-gallery.html">Wide Gallery</a></li>
+                  </ul>
+                </li>
               </ul>
             </li>
 
 
             <!-- Portfolio-->
-
-            <li class="nav-item dropdown-toggle"><a class="nav-link" href="#">Business Cards</a>
-              <ul class="dropdown-menu">
-                <li class="dropdown-item"><a href="{{ url('portfolio') }}">Metal Business Cards</a></li>
-                <li class="dropdown-item"><a href="{{ url('portfolio') }}">Plastic Business Cards</a></li>
-              </ul>
-            </li>
-
-            <!-- Portfolio-->
-
-            <li class="nav-item dropdown-toggle"><a class="nav-link" href="#">Corporate Personnel</a>
-              <ul class="dropdown-menu">
-                <li class="dropdown-item"><a href="{{ url('portfolio') }}">Corporate VIP Cards</a></li>
-                <li class="dropdown-item"><a href="{{ url('portfolio') }}">Corporate Loyalty Cards</a></li>
-                <li class="dropdown-item"><a href="{{ url('portfolio') }}">Corporate Loyalty Cards</a></li>
-              </ul>
-            </li>
-
 
             <!-- Components-->
             <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>

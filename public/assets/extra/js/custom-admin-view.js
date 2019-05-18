@@ -90,6 +90,52 @@ $(document).ready(function(){
 
     var tableInvoiceRow = $('#tableInvoiceRow').DataTable();
 
+    var tableStatusView = $('.statusShow').DataTable({
+        "ajax": {
+            url: urlRowString+"/admin/production/status",
+            type: "POST",
+        },
+        "processing": true,
+        "serverSide": true,
+        columns:[
+            { "data": "setproject_id" },
+            { "data": "title" },
+            { "data": "company" },
+            { "data": "status" },
+            { "data": "setproject_id" },
+        ],
+        "columnDefs": [
+            {
+                "targets": -1,
+                "data": null,
+                "render": function ( data, type, row, meta ) {
+                    var statusRow   = row['status'] === 'completed' ? 'disabled' : '';
+                    return "<div class='btn-group'>" +
+                        "<button title='"+row['setproject_id']+"' class='btn btn-sm btn-warning signature' style='font-size: 12px; !important;'"+statusRow+">Confirm Now</button>"+
+                        "</div>"
+                }
+            },
+        ]
+
+    });
+
+    $('.statusShow tbody').on('click','button', function(){
+        var rowData     = tableStatusView.row($(this).parents('tr')).data();
+        var confirmed   = confirm("Have you Received the Cards from Production? If yes click Ok else Cancel");
+        if(confirmed){
+            $.ajax({
+                url: urlRowString+"/admin/production/fixstatus",
+                data: {id: rowData['setproject_id']},
+                type: "POST",
+                success: function(result){
+                    if(result.status === "OK"){
+                        tableStatusView.draw();
+                    }
+                }
+            });
+        }
+    });
+
     function toTitleCase(str){
         return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
     }

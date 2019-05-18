@@ -7,7 +7,7 @@
         <a class="post-preview-img" href="shop-fw-ls.html" style="background-image: url(<?= $this->url->get('assets/images/cards.jpg') ?>);"></a>
       </div>
   </div>
-  <div class="column" style="background:#000;">
+  <div class="column">
     <div class="owl-carousel post-cards-carousel" data-owl-carousel="{ &quot;nav&quot;: true, &quot;dots&quot;: false, &quot;loop&quot;: true, &quot;autoHeight&quot;: true }">
       <div class="card-body"><img class="d-block mb-4" src="img/homepages/shop-v1/dji-logo.png" style="width: 215px !important;" alt="Xtremecardz">
         <h2 class="block-title pb-4 mb-3">Pink Metal Card</h2>
