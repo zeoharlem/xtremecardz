@@ -13,16 +13,36 @@
  */
 namespace Multiple\Frontend\Controllers;
 
+use Multiple\Frontend\Models\Albums;
+use Multiple\Frontend\Models\Categories;
+use Multiple\Frontend\Models\PortfolioItems;
 use Phalcon\Mvc\Controller;
+use Phalcon\Mvc\Model\Resultset;
 use Phalcon\Tag;
 
 class BaseController extends Controller {
     public function initialize(){
         Tag::prependTitle('Xtremecardz');
         Tag::setTitleSeparator(' | ');
-        $this->assets->collection("footer")
-            ->addJs("assets/b/demo/default/custom/components/datatables/base/data-ajax.js")
-            ->addJs('assets/b/demo/default/custom/components/forms/widgets/select2.js');
+
+        $category   = Categories::find()->toArray();
+//        foreach($category as $keyRow => $valueRow){
+//            $getPortfolio   = $valueRow->getCatPortfolio();
+////            $item_id        = $getPortfolio ? $getPortfolio->item_id : "";
+////            $buildTagQuery  = $this->modelsManager->createBuilder()
+////                ->from(["r" => "Multiple\\Frontend\\Models\\Albums"])
+////                ->where("r.item_id='".$item_id."'")->limit(8)
+////                ->getQuery()->execute()->setHydrateMode(Resultset::HYDRATE_ARRAYS);
+//            //$stack[$valueRow->name]    = $buildTagQuery->toArray();
+//            $stack[$valueRow->name]    = $getPortfolio->toArray();
+//        }
+//        var_dump($stack); exit;
+        $this->view->setVars(
+            [
+                "products"  => $category,
+                "pItems"    => PortfolioItems::find()->toArray()
+            ]
+        );
     }
     
     protected function __dataTableFlow($builder){

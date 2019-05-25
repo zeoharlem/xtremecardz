@@ -6,7 +6,7 @@
                 <div class="card-header">
                   <button class="btn btn-falcon-default btn-sm mr-2 mb-0" id="addKeyRow" type="button"><span class="fas fa-plus mr-1"> </span>Duplicate</button>
                   <button class="btn btn-falcon-default btn-sm mr-2 mb-0" id="subtractKeyRow" type="button"><span class="fas fa-minus mr-1"> </span>Remove</button>
-                  <a href="{{ url('admin/portfolio/items?category_id='~this.request.getQuery('category_id')) }}" class="btn btn-primary btn-sm mr-2 mb-0 pull-right">View</a>
+                  <a href="{{ url('admin/portfolio/items?category_id='~request.getQuery('category_id')~'&title='~request.getQuery('name')) }}" class="btn btn-primary btn-sm mr-2 mb-0 pull-right">View</a>
                 </div>
                 <div class="card-body bg-light">
 
@@ -23,6 +23,9 @@
                             </div>
                             <div class="col">
                               <div class="form-group"><label class="ls  text-600 font-weight-semi-bold mb-0">Description</label><input autocomplete="off" name="description[]" class="form-control" type="text" placeholder="Describe the portfolio"></div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group"><label class="ls  text-600 font-weight-semi-bold mb-0">Amount(&#8358;)</label><input autocomplete="off" name="price[]" class="form-control" type="text" placeholder="Price Tag"></div>
                             </div>
                           </div>
 
@@ -56,6 +59,9 @@
                           </div>
                           <div class="col">
                             <div class="form-group"><label class="ls  text-600 font-weight-semi-bold mb-0">Description</label><input autocomplete="off" name="description[]" class="form-control" type="text" placeholder="Describe the portfolio"></div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group"><label class="ls  text-600 font-weight-semi-bold mb-0">Amount(&#8358;)</label><input autocomplete="off" name="price[]" class="form-control" type="text" placeholder="Price Tag"></div>
                           </div>
                         </div>
                     </div>

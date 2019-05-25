@@ -3,7 +3,8 @@
   <div class="row">
     <!-- Project Gallery-->
     <div class="col-lg-7 mb-3">
-      <div class="post-meta pb-3"><span class="text-sm ml-0"><i class="fe-icon-clock"></i>Sep 16, 2018</span><a class="text-sm" href="#"><i class="fe-icon-bookmark"></i>Mobile Apps</a></div>
+      <div class="post-meta pb-3">
+      <span class="text-sm ml-0"><i class="fe-icon-clock"></i>Sep 16, 2018</span><a class="text-sm" href="#"><i class="fe-icon-bookmark"></i>Mobile Apps</a></div>
       <div class="row">
         <div class="col-sm-6"><a class="gallery-item mb-30" href="{{ url('assets/img/portfolio/single/01.jpg') }}" data-fancybox="sideGallery" data-options="{&quot;caption&quot;: &quot;Gallery Image Caption&quot;}"><img src="{{ url('assets/img/portfolio/01.jpg') }}" alt="Gallery Image"/></a></div>
         <div class="col-sm-6"><a class="gallery-item mb-30" href="{{ url('assets/img/portfolio/single/02.jpg') }}" data-fancybox="sideGallery" data-options="{&quot;caption&quot;: &quot;Gallery Image Caption&quot;}"><img src="{{ url('assets/img/portfolio/12.jpg') }}" alt="Gallery Image"/></a></div>

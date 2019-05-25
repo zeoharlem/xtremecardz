@@ -52,5 +52,8 @@
     <!-- JavaScript (jQuery) libraries, plugins and custom scripts-->
     <script src="{{ url('assets/js/vendor.min.js') }}"></script>
     <script src="{{ url('assets/js/theme.min.js') }}"></script>
+    <script src="{{ url('assets/js/dropzone.js') }}"></script>
+    <script src="{{ url('assets/js/bootstrap-notify.min.js') }}"></script>
+    {{ this.assets.outputJs("footers") }}
     </body>
 </html>

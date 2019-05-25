@@ -1,25 +1,30 @@
 <div class="offcanvas-container is-triggered offcanvas-container-reverse" id="shopping-cart"><span class="offcanvas-close"><i class="fe-icon-x"></i></span>
       <div class="px-4">
         <h6>Your Cart</h6>
-        <div class="widget widget-cart pt-2"><a class="featured-product" href="shop-single.html">
-            <div class="featured-product-thumb"><img src="img/widgets/cart/01.jpg" alt="Product Image"/>
-            </div>
-            <div class="featured-product-info">
-              <h5 class="featured-product-title">Samsung Galaxy S9 Plus</h5><span class="featured-product-price">1x $839.99</span>
-            </div><span class="remove-product"><i class="fe-icon-x"></i></span></a><a class="featured-product" href="shop-single.html">
-            <div class="featured-product-thumb"><img src="img/widgets/cart/02.jpg" alt="Product Image"/>
-            </div>
-            <div class="featured-product-info">
-              <h5 class="featured-product-title">Samsung Gear 360 Camera</h5><span class="featured-product-price">1 x $68.00</span>
-            </div><span class="remove-product"><i class="fe-icon-x"></i></span></a><a class="featured-product" href="shop-single.html">
-            <div class="featured-product-thumb"><img src="img/widgets/cart/03.jpg" alt="Product Image"/>
-            </div>
-            <div class="featured-product-info">
-              <h5 class="featured-product-title">Edifier W855BT Bluetooth</h5><span class="featured-product-price">1 x $99.85</span>
-            </div><span class="remove-product"><i class="fe-icon-x"></i></span></a>
-          <hr class="mt-3 mb-3"><span class="text-sm text-muted">Subtotal:&nbsp;</span><strong>$1,007.84</strong>
-          <div class="d-flex justify-content-between pt-3"><a class="btn btn-primary btn-block btn-sm mr-2" href="cart.html">View Cart</a><a class="btn btn-accent btn-block mt-0 btn-sm" href="checkout-address.html">Checkout</a></div>
+        <?php if($this->session->get("portfolio_items") || $this->session->get("cart_item")){
+        //var_dump($this->session->get('portfolio_items'));
+        ?>
+        <div class="widget widget-cart pt-2">
+            <?php foreach($this->session->get("portfolio_items") as $key => $value){ ?>
+            <a class="featured-product" href="#">
+                <div class="featured-product-thumb"><img src="{{url('assets/portfolio/'~value['image'])}}" alt="Product Image"/></div>
+
+                <div class="featured-product-info">
+                  <h5 class="featured-product-title"><?php echo ucwords($value['name']) ?></h5><span class="featured-product-price"><?php echo $value['quantity']; ?> x &#8358;<?php echo $value['price'] ?></span>
+                </div>
+                <span class="remove-product"><i class="fe-icon-x"></i></span>
+            </a>
+            <?php } ?>
+          <hr class="mt-3 mb-3"><span class="text-sm text-muted">Subtotal:&nbsp;</span><strong>&#8358;1,007.84</strong>
+          <div class="d-flex justify-content-between pt-3"><a class="btn btn-primary btn-block btn-sm mr-2" href="{{url('cart/load')}}">View Cart</a><a class="btn btn-accent btn-block mt-0 btn-sm" href="{{url('cart/checkout')}}">Checkout</a></div>
         </div>
+        <?php
+        }
+        else{
+            echo "Cart is Empty";
+            var_dump($this->session->get('portfolio_items'));
+        }
+        ?>
       </div>
     </div>
 
@@ -40,50 +45,44 @@
           <!-- Main Menu-->
           <ul class="navbar-nav d-none d-lg-block">
             <!-- Home-->
-            <li class="nav-item"><a class="nav-link" href="components.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{url('')}}">Home</a></li>
             <!-- Home -->
 
             <!-- Portfolio-->
 
-            <li class="nav-item dropdown-toggle"><a class="nav-link" href="#">Cards</a>
-              <ul class="dropdown-menu">
-                <li class="dropdown-item has-children"><a href="portfolio-style1-boxed.html">ID Cards</a>
-                  <ul class="dropdown-menu">
-                    <li class="dropdown-item"><a href="portfolio-style1-boxed.html">Style 1 Boxed Layout</a></li>
-                    <li class="dropdown-item"><a href="portfolio-style1-fw.html">Style 1 Full Width Layout</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown-item has-children"><a href="portfolio-style2-boxed.html">Business Cards</a>
-                  <ul class="dropdown-menu">
-                    <li class="dropdown-item"><a href="portfolio-style2-boxed.html">Style 2 Boxed Layout</a></li>
-                    <li class="dropdown-item"><a href="portfolio-style2-fw.html">Style 2 Full Width Layout</a></li>
-                  </ul>
-                </li>
+              <li class="nav-item mega-dropdown-toggle"><a class="nav-link" href="#">Products</a>
+                <div class="dropdown-menu mega-dropdown">
+                  <div class="d-flex">
+                    <div class="column">
+                      <div class="widget widget-custom-menu">
+                        <h4 class="widget-title"><b>Products</b></h4>
+                        <ul>
 
-                <li class="dropdown-item has-children"><a href="portfolio-single-side-gallery-grid.html">Cooperate Persona</a>
-                  <ul class="dropdown-menu">
-                    <li class="dropdown-item"><a href="portfolio-single-side-gallery-grid.html">Side Gallery Grid</a></li>
-                    <li class="dropdown-item"><a href="portfolio-single-side-gallery-list.html">Side Gallery List</a></li>
-                    <li class="dropdown-item"><a href="portfolio-single-wide-slider.html">Wide Slider</a></li>
-                    <li class="dropdown-item"><a href="portfolio-single-wide-gallery.html">Wide Gallery</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
+                  {% for keys, values in products %}
 
+                          <li><a href="{{url('portfolio/?tag='~values['category_id']~'&layer='~values['description']~'&gr='~values['name'])}}">{{values['name'] | capitalize}}</a></li>
 
+                   {% endfor %}
+
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="column p-0 mr-0 ml-3" style="width: 320px;"><a class="d-block" href="shop-single.html"><img src="{{ url('assets/img/shop/mega-menu.jpg') }}" alt="Samsung Galaxy S9"/></a></div>
+                  </div>
+                </div>
+              </li>
             <!-- Portfolio-->
 
             <!-- Components-->
+            <li class="nav-item"><a class="nav-link" href="#">Accessories</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Our Story</a></li>
           </ul>
           <div>
             <ul class="navbar-buttons d-inline-block align-middle mr-lg-2">
               <li class="d-block d-lg-none"><a href="#mobile-menu" data-toggle="offcanvas"><i class="fe-icon-menu"></i></a></li>
               <!-- <li><a href="#" data-toggle="search"><i class="fe-icon-search"></i></a></li> -->
-              <li><a href="#shopping-cart" data-toggle="offcanvas"><i class="fe-icon-shopping-cart"></i></a><span class="badge badge-danger">3</span></li>
+              <li><a href="#shopping-cart" data-toggle="offcanvas"><i class="fe-icon-shopping-cart"></i></a><span class="badge badge-danger">0</span></li>
             </ul>
             <a class="btn btn-gradient ml-3 d-none d-xl-inline-block" href="#" target="_blank">Login</a>
           </div>

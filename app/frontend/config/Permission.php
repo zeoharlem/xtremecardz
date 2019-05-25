@@ -29,13 +29,15 @@ class Permission extends \Phalcon\Mvc\User\Plugin{
         'login'                 => ['*'],
         "register"              => ['*'],
         "portfolio"             => ['*'],
-        "logout"                => ['*']
+        "logout"                => ['*'],
+        "cart"                  => ['*']
     );
     
     protected $_userResources = array(
         'dashboard'         => ['*'],
+        'login'             => ['*'],
         'profile'           => ['*'],
-        "admin"             => ['*'],
+        "activities"        => ['*'],
     );
     
     protected $_adminResources = array(

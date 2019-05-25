@@ -65,25 +65,16 @@
             <div class="row">
               <div class="col-sm-6">
                 <div class="widget widget-categories widget-light-skin">
-                  <ul>
-                    <li><a href="#">Computers &amp; Accessories</a></li>
-                    <li><a href="#">Smartphones &amp; Tablets</a></li>
-                    <li><a href="#">TV, Video &amp; Audio</a></li>
-                    <li><a href="#">Cameras, Photo &amp; Video</a></li>
-                    <li><a href="#">Headphones</a></li>
-                    <li><a href="#">Wearable Electroinics</a></li>
-                  </ul>
+                  Logo
+                  <p style="color:white">Description lorem ipsum hassdh fhohout thanks for the patraoategege</p>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="widget widget-categories widget-light-skin">
                   <ul>
-                    <li><a href="#">Printers &amp; Ink</a></li>
-                    <li><a href="#">Video Games</a></li>
-                    <li><a href="#">Car Electronics</a></li>
-                    <li><a href="#">Smart Home, IoT</a></li>
-                    <li><a href="#">Musical Instruments</a></li>
-                    <li><a href="#">Software</a></li>
+                  {% for keyFolio, valueFolio in pItems %}
+                    <li><a href="#">{{valueFolio['title'] | capitalize}}</a></li>
+                  {% endfor %}
                   </ul>
                 </div>
               </div>
@@ -126,7 +117,7 @@
             <!-- Subscription-->
             <div class="col-xl-6 col-lg-7 col-md-9">
               <div class="widget widget-light-skin">
-                <form action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126" method="post" target="_blank" novalidate>
+                <form action="#" method="post" target="_blank" novalidate>
                     <div class="input-group">
                       <input class="form-control form-control-light-skin" type="email" name="EMAIL" placeholder="Email address">
                       <div class="input-group-append">
@@ -145,7 +136,7 @@
           <hr class="hr-light">
           <div class="d-md-flex justify-content-between align-items-center py-4 text-center text-md-left">
             <div class="order-2"><a class="footer-link text-white" href="#">About</a><a class="footer-link text-white ml-3" href="#">Help &amp; Info</a><a class="footer-link text-white ml-3" href="#">Privacy Policy</a></div>
-            <p class="m-0 text-sm text-white order-1"><span class='opacity-60'>© All rights reserved. Made with</span> <i class='d-inline-block align-middle fe-icon-heart text-danger'></i> <a href='http://createx.studio/' class='d-inline-block nav-link text-white opacity-60 p-0' target='_blank'>by Createx Studio</a></p>
+            <p class="m-0 text-sm text-white order-1"><span class='opacity-60'>Xtremecardz 2019</span> </p>
           </div>
         </div>
       </div>

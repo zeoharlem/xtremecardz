@@ -50,14 +50,14 @@
   <div class="container text-left align-self-center">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index-2.html">Home</a>
+        <li class="breadcrumb-item"><a href="#">Home</a>
         </li>
-        <li class="breadcrumb-item"><a href="portfolio-style2-boxed.html">Portfolio</a>
+        <li class="breadcrumb-item"><a href="#">Portfolio</a>
         </li>
       </ol>
     </nav>
-    <h1 class="page-title-heading">Metal Card | Portfolio</h1>
-    <div class="page-title-subheading">Style 2 Grid View <strong>Boxed Layout</strong></div>
+    <h1 class="page-title-heading"><?php echo $this->request->hasQuery('gr')? $this->request->getQuery('gr') : "Portfolio"; ?></h1>
+    <div class="page-title-subheading">Card <strong>Portfolio</strong></div>
   </div>
 </div>
 
@@ -70,5 +70,8 @@
     <!-- JavaScript (jQuery) libraries, plugins and custom scripts-->
     <script src="<?= $this->url->get('assets/js/vendor.min.js') ?>"></script>
     <script src="<?= $this->url->get('assets/js/theme.min.js') ?>"></script>
+    <script src="<?= $this->url->get('assets/js/dropzone.js') ?>"></script>
+    <script src="<?= $this->url->get('assets/js/bootstrap-notify.min.js') ?>"></script>
+    <?= $this->assets->outputJs('footers') ?>
     </body>
 </html>

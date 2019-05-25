@@ -112,6 +112,7 @@ class PortfolioController extends BaseController {
                 if(!empty($valueRow)) {
                     $taskQuery[] = [
                         "title"         => trim($valueRow),
+                        "price"         => trim($queryRow['price'][$keyRow]),
                         "description"   => trim($queryRow['description'][$keyRow]),
                         "category_id"   => $this->request->getPost("category_id","int")
                     ];

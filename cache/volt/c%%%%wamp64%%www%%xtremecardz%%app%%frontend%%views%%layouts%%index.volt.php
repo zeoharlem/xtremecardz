@@ -58,5 +58,8 @@
     <!-- JavaScript (jQuery) libraries, plugins and custom scripts-->
     <script src="<?= $this->url->get('assets/js/vendor.min.js') ?>"></script>
     <script src="<?= $this->url->get('assets/js/theme.min.js') ?>"></script>
+    <script src="<?= $this->url->get('assets/js/dropzone.js') ?>"></script>
+    <script src="<?= $this->url->get('assets/js/bootstrap-notify.min.js') ?>"></script>
+    <?= $this->assets->outputJs('footers') ?>
     </body>
 </html>

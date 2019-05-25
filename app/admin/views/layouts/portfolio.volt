@@ -11,7 +11,7 @@
 <div class="card-body">
   <div class="row">
     <div class="col-lg-8">
-      <h3 class="mb-0"><b>Portfolio</b></h3>
+      <h3 class="mb-0"><b><?php echo $this->request->hasQuery("title") ? ucwords($this->request->getQuery("title")) : "Portfolio"; ?></b></h3>
       <!--<p class="mt-2">Examples and usage guidelines for form control styles, layout options, and custom components for creating a wide variety of forms.</p>-->
     </div>
   </div>

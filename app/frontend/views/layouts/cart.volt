@@ -12,12 +12,12 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a>
         </li>
-        <li class="breadcrumb-item"><a href="#">Portfolio</a>
+        <li class="breadcrumb-item"><a href="#">Cart</a>
         </li>
       </ol>
     </nav>
-    <h1 class="page-title-heading"><?php echo $this->request->hasQuery('gr')? $this->request->getQuery('gr') : "Portfolio"; ?></h1>
-    <div class="page-title-subheading">Card <strong>Portfolio</strong></div>
+    <h1 class="page-title-heading"><?php echo $this->request->hasQuery('gr')? $this->request->getQuery('gr') : "Cart"; ?></h1>
+    <div class="page-title-subheading">View <strong>Cart</strong></div>
   </div>
 </div>
 
