@@ -48,9 +48,14 @@
         </a>
         <ul class="nav collapse" id="layouts" data-parent="#navbarVerticalCollapse">
           <li class="nav-item"><a class="nav-link" href="{{ url('admin/portfolio') }}">Category(ies)</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Create Items</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">List Items</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Tags</a></li>
+        </ul>
+      </li>
+      <li class="nav-item"><a class="nav-link dropdown-indicator" href="#accessories" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="accessories">
+          <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-cube"></span></span><span>Accessories</span></div>
+        </a>
+        <ul class="nav collapse" id="accessories" data-parent="#navbarVerticalCollapse">
+          <li class="nav-item"><a class="nav-link" href="{{ url('admin/accessories') }}">Create</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url('admin/accessories/list') }}">View List</a></li>
         </ul>
       </li>
 

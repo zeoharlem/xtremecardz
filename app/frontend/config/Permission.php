@@ -29,6 +29,7 @@ class Permission extends \Phalcon\Mvc\User\Plugin{
         'login'                 => ['*'],
         "register"              => ['*'],
         "portfolio"             => ['*'],
+        "accessories"           => ['*'],
         "logout"                => ['*'],
         "cart"                  => ['*']
     );

@@ -35,7 +35,8 @@ class Permission extends \Phalcon\Mvc\User\Plugin{
         'dashboard'             => ['*'],
         'projects'              => ['*'],
         'settings'              => ['*'],
-        "production"            => ['*']
+        "production"            => ['*'],
+        "accessories"           => ['*'],
     );
     
     protected $_adminResources = array(

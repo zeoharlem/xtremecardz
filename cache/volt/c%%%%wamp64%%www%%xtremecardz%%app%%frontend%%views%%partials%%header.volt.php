@@ -1,7 +1,7 @@
 <div class="offcanvas-container is-triggered offcanvas-container-reverse" id="shopping-cart"><span class="offcanvas-close"><i class="fe-icon-x"></i></span>
       <div class="px-4">
         <h6>Your Cart</h6>
-        <?php if($this->session->get("portfolio_items") || $this->session->get("cart_item")){
+        <?php if($this->session->get("portfolio_items")){
         //var_dump($this->session->get('portfolio_items'));
         ?>
         <div class="widget widget-cart pt-2">
@@ -15,14 +15,39 @@
                 <span class="remove-product"><i class="fe-icon-x"></i></span>
             </a>
             <?php } ?>
-          <hr class="mt-3 mb-3"><span class="text-sm text-muted">Subtotal:&nbsp;</span><strong>&#8358;1,007.84</strong>
-          <div class="d-flex justify-content-between pt-3"><a class="btn btn-primary btn-block btn-sm mr-2" href="<?= $this->url->get('cart/load') ?>">View Cart</a><a class="btn btn-accent btn-block mt-0 btn-sm" href="<?= $this->url->get('cart/checkout') ?>">Checkout</a></div>
         </div>
         <?php
         }
         else{
-            echo "Cart is Empty";
-            var_dump($this->session->get('portfolio_items'));
+            echo "Empty Portfolio Item";
+        }
+        if($this->session->get("cart_item")){
+        ?>
+        <div class="widget widget-cart pt-2">
+            <?php foreach($this->session->get("cart_item") as $key => $value){ ?>
+            <a class="featured-product" href="#">
+                <div class="featured-product-thumb"><img src="<?= $this->url->get('assets/accessories/' . $value['image']) ?>" alt="Product Image"/></div>
+
+                <div class="featured-product-info">
+                  <h5 class="featured-product-title"><?php echo ucwords($value['name']) ?></h5><span class="featured-product-price"><?php echo $value['quantity']; ?> x &#8358;<?php echo $value['price'] ?></span>
+                </div>
+                <span class="remove-product"><i class="fe-icon-x"></i></span>
+            </a>
+            <?php } ?>
+
+        </div>
+        <?php
+        }
+        else{
+            echo "Empty Accessories";
+            //var_dump($this->session->get('portfolio_items'));
+        }
+        if($this->session->has("cart_item") || $this->session->has("portfolio_items")){
+        $total  = $this->session->get('totalPortfolio') + $this->session->get('totalCartItem');
+        ?>
+            <hr class="mt-3 mb-3"><span class="text-sm text-muted">Subtotal:&nbsp;</span><strong>&#8358;<?php echo number_format($total, 2); ?></strong>
+            <div class="d-flex justify-content-between pt-3"><a class="btn btn-primary btn-block btn-sm mr-2" href="<?= $this->url->get('cart/load') ?>">View Cart</a><a class="btn btn-accent btn-block mt-0 btn-sm" href="<?= $this->url->get('cart/checkout') ?>">Checkout</a></div>
+        <?php
         }
         ?>
       </div>
@@ -74,7 +99,7 @@
             <!-- Portfolio-->
 
             <!-- Components-->
-            <li class="nav-item"><a class="nav-link" href="#">Accessories</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= $this->url->get('accessories') ?>">Accessories</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Our Story</a></li>
           </ul>
@@ -84,7 +109,7 @@
               <!-- <li><a href="#" data-toggle="search"><i class="fe-icon-search"></i></a></li> -->
               <li><a href="#shopping-cart" data-toggle="offcanvas"><i class="fe-icon-shopping-cart"></i></a><span class="badge badge-danger">0</span></li>
             </ul>
-            <a class="btn btn-gradient ml-3 d-none d-xl-inline-block" href="#" target="_blank">Login</a>
+            <!--<a class="btn btn-gradient ml-3 d-none d-xl-inline-block" href="#" target="_blank">Login</a>-->
           </div>
         </div>
       </div>

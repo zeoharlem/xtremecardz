@@ -75,6 +75,7 @@
                   {% for keyFolio, valueFolio in pItems %}
                     <li><a href="#">{{valueFolio['title'] | capitalize}}</a></li>
                   {% endfor %}
+                    <li><a href="{{url('accessories')}}">Accessories</a></li>
                   </ul>
                 </div>
               </div>
@@ -87,7 +88,6 @@
               <ul>
                 <li><a href="#">Our Story</a></li>
                 <li><a href="#">About Xtremecardz</a></li>
-                <li><a href="#">Blog</a></li>
                 <li><a href="#">Products</a></li>
                 <li><a href="#">Contact Us</a></li>
                 <li><a href="#">FAQ</a></li>

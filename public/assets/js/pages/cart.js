@@ -16,13 +16,13 @@
 }($));
 
 //Set Private Roles and Actions to Events
+var stringVi        = 'xtremecardz';
+var urlPath         = window.location;
+var fullpath        = urlPath.protocol+'//'+urlPath.hostname+urlPath.pathname;
+var frontend        = urlPath.pathname.substring(0, urlPath.pathname.indexOf(stringVi)+stringVi.length);
+var urlRowString    = urlPath.protocol+'//'+urlPath.hostname+frontend;
 
 var SetCartActions  = function(){
-    var stringVi        = 'xtremecardz';
-    var urlPath         = window.location;
-    var fullpath        = urlPath.protocol+'//'+urlPath.hostname+urlPath.pathname;
-    var frontend        = urlPath.pathname.substring(0, urlPath.pathname.indexOf(stringVi)+stringVi.length);
-    var urlRowString    = urlPath.protocol+'//'+urlPath.hostname+frontend;
 
     var handleSpotColorClick    = function () {
         $('select[name="custom_die_cut"], select[name="uv_printing"], select[name="white_ink"]').change(function(e){
@@ -78,6 +78,27 @@ var SetCartActions  = function(){
         });
     };
 
+    var submitBillingRegister   = function(){
+        var options = {
+            beforeSubmit:  showRequest,  // pre-submit callback
+            success:       showResponse,  // post-submit callback
+
+            // other available options:
+            url: urlRowString+"/cart/checkout",        // override for form's 'action' attribute
+            type: "POST",       // 'get' or 'post', override for form's 'method' attribute
+            //dataType:  null        // 'xml', 'script', or 'json' (expected server response type)
+            clearForm: true,        // clear all form fields after successful submit
+            //resetForm: true        // reset the form after successful submit
+
+            // $.ajax options can be used here too, for example:
+            //timeout:   3000
+        };
+        $('#submitBillingRegister').click(function(){
+            $('#formBillingRegister').ajaxSubmit(options);
+            return false;
+        });
+    }
+
     var formSubmitRow   = function(){
         $('#addToCartBtn').click(function(e){
             e.preventDefault();
@@ -85,7 +106,7 @@ var SetCartActions  = function(){
             $("#cartFormRow").find("input, select, textarea").each(function(keyRow, valueRow){
                 if($(this).val() ==""){
                     emptyTextRow    = false;
-                    alert("Empty Field! Check the Fields"+valueRow.attr("name"));
+                    alert("Empty Field! Check the Fields"+$(this).attr("name"));
                     return false;
                 }
             });
@@ -140,7 +161,34 @@ var SetCartActions  = function(){
                 $('#initPriceTag').val(getPriceTag - getEngrave);
             }
         });
-    }
+    };
+
+    var addAccessories  = function(){
+        $(".addToCartBtn").click(function(e){
+            e.preventDefault();
+            $.ajax({
+                method: "POST",
+                url: urlRowString+"/cart/setproduct",
+                data: {accessories_id:$(this).attr("data-value"),quantity:""},
+                success: function(results){
+                    if(results.status === "OK") {
+                        var notify = $.notify(
+                            '<strong>Accessory(ies)</strong>Added to Cart', {
+                                type: 'success',
+                                allow_dismiss: false,
+                                showProgressbar: false,
+                                newest_on_top: true,
+                            }
+                        );
+                    }
+                    else{
+                        alert(JSON.stringify(results))
+                    }
+                }
+            });
+            // alert($(this).attr("data-value"));
+        });
+    };
 
     return {
         init: function(){
@@ -149,6 +197,9 @@ var SetCartActions  = function(){
             handleColorFrontRadioBox();
             handleColorBackSideRadio();
             laserEngraveAction();
+            addAccessories();
+            submitBillingRegister();
+
         }
     }
 }();
@@ -156,6 +207,56 @@ var SetCartActions  = function(){
 $(document).ready(function(){
     SetCartActions.init();
 });
+
+//Trigger the Paystack Payment
+// function payWithPaystack(){
+//     var handler = PaystackPop.setup({
+//         key: 'pk_test_8f18f18010c2bb4bb269caff0b2bf594a46797da',
+//         email: 'customer@email.com',
+//         amount: 10000,
+//         currency: "NGN",
+//         firstname: 'Stephen',
+//         lastname: 'King',
+//         callback: function(response){
+//             alert('success. transaction ref is ' + response.reference);
+//         },
+//         onClose: function(){
+//             alert('window closed');
+//         }
+//     });
+//     handler.openIframe();
+// }
+
+function payWithPaystack(){
+    window.location.href = urlRowString+"/cart/check"
+}
+
+// pre-submit callback
+function showRequest(formData, jqForm, options) {
+    var queryString = $.param(formData);
+    //alert('About to submit: \n\n' + queryString);
+    $.notify({
+        message: "Please Wait. Submitting Query"
+    },{
+        type: "primary",
+        newest_on_top: true,
+        allow_dismiss: false,
+        showProgressbar: false,
+    });
+    return true;
+}
+
+// post-submit callback
+function showResponse(responseText, statusText, xhr, $form)  {
+    // alert('status: ' + statusText + '\n\nresponseText: \n' + responseText +
+    //     '\n\nThe output div should have already been updated with the responseText.');
+    if(responseText.status === "OK"){
+        window.location.href = urlRowString+"/cart/payment?token="+Math.random().toString(32).slice(2);
+    }
+    else{
+        alert(JSON.stringify(xhr));
+    }
+}
 
 $("#numQtyRow").inputFilter(function(value){
     var getInitPrice    = $.trim($('#initPriceTag').val());

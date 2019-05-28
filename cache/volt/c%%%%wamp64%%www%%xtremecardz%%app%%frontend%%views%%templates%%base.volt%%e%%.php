@@ -44,7 +44,7 @@ a:3:{i:0;s:1898:"<!DOCTYPE html>
     <?= $this->partial('partials/offcanvas') ?>
     <?= $this->partial('partials/header') ?>
 
-    ";s:7:"content";a:1:{i:0;a:4:{s:4:"type";i:357;s:5:"value";s:1:" ";s:4:"file";s:65:"C:\wamp64\www\xtremecardz\app/frontend/views/\templates/base.volt";s:4:"line";i:47;}}i:1;s:552:"
+    ";s:7:"content";a:1:{i:0;a:4:{s:4:"type";i:357;s:5:"value";s:1:" ";s:4:"file";s:65:"C:\wamp64\www\xtremecardz\app/frontend/views/\templates/base.volt";s:4:"line";i:47;}}i:1;s:636:"
 
     <?= $this->partial('partials/footer') ?>
 
@@ -53,6 +53,7 @@ a:3:{i:0;s:1898:"<!DOCTYPE html>
     <script src="<?= $this->url->get('assets/js/vendor.min.js') ?>"></script>
     <script src="<?= $this->url->get('assets/js/theme.min.js') ?>"></script>
     <script src="<?= $this->url->get('assets/js/dropzone.js') ?>"></script>
+    <script src="<?= $this->url->get('assets/js/jquery.form.min.js') ?>"></script>
     <script src="<?= $this->url->get('assets/js/bootstrap-notify.min.js') ?>"></script>
     <?= $this->assets->outputJs('footers') ?>
     </body>

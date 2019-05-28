@@ -26,23 +26,13 @@ class BaseController extends Controller {
         Tag::setTitleSeparator(' | ');
 
         $category   = Categories::find()->toArray();
-//        foreach($category as $keyRow => $valueRow){
-//            $getPortfolio   = $valueRow->getCatPortfolio();
-////            $item_id        = $getPortfolio ? $getPortfolio->item_id : "";
-////            $buildTagQuery  = $this->modelsManager->createBuilder()
-////                ->from(["r" => "Multiple\\Frontend\\Models\\Albums"])
-////                ->where("r.item_id='".$item_id."'")->limit(8)
-////                ->getQuery()->execute()->setHydrateMode(Resultset::HYDRATE_ARRAYS);
-//            //$stack[$valueRow->name]    = $buildTagQuery->toArray();
-//            $stack[$valueRow->name]    = $getPortfolio->toArray();
-//        }
-//        var_dump($stack); exit;
         $this->view->setVars(
             [
                 "products"  => $category,
                 "pItems"    => PortfolioItems::find()->toArray()
             ]
         );
+        $this->assets->collection("footers");
     }
     
     protected function __dataTableFlow($builder){

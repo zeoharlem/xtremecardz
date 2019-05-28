@@ -18,9 +18,10 @@ use Phalcon\Config\Adapter\Ini as ConfigIni;
 use Phalcon\DiInterface;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\ModuleDefinitionInterface;
+use Yabacon\Paystack;
 
 class Module implements ModuleDefinitionInterface{
-    
+
     public function registerAutoloaders(DiInterface $di = null) {
         $loader = new Loader();
         $loader->registerNamespaces(array(
@@ -75,6 +76,12 @@ class Module implements ModuleDefinitionInterface{
             $security   = new \Phalcon\Security();
             return $security;
         }, true);
+
+        //Paystack setup
+        $di->set('paystack', function() use ($config){
+            $paystack   = new Paystack($config->paystack->secret);
+            return $paystack;
+        });
 
         //Set the view directories
         
